@@ -1,0 +1,19 @@
+.book-filter {
+	background-color: #c7f9cc;
+	padding: 30px;
+}
+
+.book-filter label {
+	font-size: 1.2rem;
+	color: #38a3a5;
+}
+
+.book-filter input {
+	padding: 0.5rem;
+	font-size: 1rem;
+	border-radius: 6px;
+	border: none;
+	outline: none;
+	margin-right: 1rem;
+	max-width: 10rem;
+}

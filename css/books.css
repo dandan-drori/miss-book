@@ -1,0 +1,136 @@
+.books-list {
+	display: flex;
+	flex-wrap: wrap;
+	list-style: none;
+}
+
+.books-list li article {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: #80ed99;
+	margin: 1rem;
+	padding: 1rem;
+	border-radius: 15px;
+	cursor: pointer;
+}
+
+.books-list li article h2 {
+	margin-bottom: 0.5rem;
+}
+
+.book-details {
+	display: flex;
+	justify-content: space-between;
+	padding: 2rem 3rem 40px 3rem;
+}
+
+.book-details ul {
+	list-style: none;
+}
+
+.book-details h3 {
+	display: inline-block;
+	color: #ededed;
+}
+
+.book-details p {
+	display: inline-block;
+	font-size: 1.1rem;
+}
+
+.book-details button {
+	background-color: transparent;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	color: #80ed99;
+	border: 2px solid #80ed99;
+	border-radius: 7px;
+	padding: 0.2rem 0.6rem;
+	font-size: 1rem;
+	margin-bottom: 2rem;
+}
+
+.image-container {
+	position: relative;
+	overflow: hidden;
+	width: fit-content;
+	margin-bottom: 2rem;
+}
+
+.sale-container {
+	position: absolute;
+	top: 10px;
+	right: -40px;
+	width: 9rem;
+	height: 3rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #ff0033;
+	color: #ffff00;
+	font-weight: bolder;
+	transform: rotateZ(45deg);
+}
+
+.sale-container p {
+	font-size: 1.3rem;
+}
+
+button.show-more {
+	margin: 0;
+	border: none;
+	color: darkblue;
+	text-decoration: underline;
+}
+
+.book-details p.high {
+	color: #cc1133;
+}
+
+.book-details p.low {
+	color: #00ff33;
+}
+
+.book-reviews {
+	margin-top: 2rem;
+}
+
+.book-reviews .book-review {
+	display: flex;
+	width: fit-content;
+	border: 2px solid black;
+	border-radius: 10px;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+
+.book-review button {
+	margin-left: 1rem;
+	border: none;
+	color: red;
+	font-weight: bold;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+form input,
+form select,
+form textarea {
+	font-size: 1rem;
+	padding: 0.3rem 0.5rem;
+	border-radius: 7px;
+	margin-bottom: 0.5rem;
+}
+
+form button.btn-submit {
+	color: #050505;
+	padding: 0.4rem 1.7rem;
+	border: 3px solid #050505;
+	font-weight: bold;
+}
