@@ -1,5 +1,5 @@
-import appHeader from './cmps/appHeader.js'
-import appFooter from './cmps/appFooter.js'
+import appHeader from './cmps/app-header.js'
+import appFooter from './cmps/app-footer.js'
 import userMsg from './cmps/user-msg.js'
 import { router } from './router.js'
 

@@ -15,6 +15,10 @@ body {
 	box-sizing: border-box;
 }
 
+a {
+	text-decoration: none;
+}
+
 h1 {
 	color: #38a3a5;
 	font-family: cursive;
@@ -39,8 +43,12 @@ h1 {
 
 .nav-links li a {
 	color: #dedede;
-	text-decoration: none;
 	font-size: 1.2rem;
+}
+
+.nav-links li a.router-link-exact-active {
+	text-decoration: underline;
+	color: white;
 }
 
 .home-page {

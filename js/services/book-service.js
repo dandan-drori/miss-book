@@ -5,6 +5,9 @@ export const bookService = {
 	query,
 	getEmptyBook,
 	getBookById,
+	addGoogleBook,
+	queryGoogle,
+	getAdjacentBookId,
 	getPriceToShow,
 	addReview,
 	deleteReview,
@@ -12,6 +15,8 @@ export const bookService = {
 
 const BOOKS_KEY = 'books'
 const gBooks = _createBooks()
+const GOOGLE_BOOKS_KEY = 'google books'
+const gGoogleBooks = []
 
 function query() {
 	return storageService.query(BOOKS_KEY)
@@ -19,6 +24,28 @@ function query() {
 
 function getBookById(bookId) {
 	return storageService.get(BOOKS_KEY, bookId)
+}
+
+function addGoogleBook(googleBook) {
+	const book = _convertGoogleToNormal(googleBook)
+	storageService.post(BOOKS_KEY, book)
+	return book
+}
+
+function queryGoogle(query) {
+	const googleBookQueryMap = utilService.loadFromStorage(GOOGLE_BOOKS_KEY) || {}
+	if (googleBookQueryMap && googleBookQueryMap[query]) {
+		console.log('from cache')
+		return Promise.resolve(googleBookQueryMap[query])
+	}
+	return fetch(`https://www.googleapis.com/books/v1/volumes?printType=books&q=${query}`)
+		.then(res => res.json())
+		.then(data => {
+			googleBookQueryMap[query] = data.items
+			utilService.saveToStorage(GOOGLE_BOOKS_KEY, googleBookQueryMap)
+			return data.items
+		})
+		.catch(err => console.log(err))
 }
 
 function addReview(bookId, review) {
@@ -59,6 +86,17 @@ function getPriceToShow({ amount, currencyCode }) {
 	return new Intl.NumberFormat('en-US', { style: 'currency', currency: currencyCode }).format(
 		amount
 	)
+}
+
+function getAdjacentBookId(bookId, diff) {
+	return query().then(books => {
+		const idx = books.findIndex(book => book.id === bookId)
+		return idx === books.length - 1
+			? books[0].id
+			: idx === -1
+			? books[books.length - 1].id
+			: books[idx + diff].id
+	})
 }
 
 function getEmptyBook() {
@@ -164,5 +202,28 @@ function _createBook(
 		listPrice,
 		reviews,
 	}
+	return book
+}
+
+function _convertGoogleToNormal(googleBook) {
+	const book = getEmptyBook()
+	book.id = googleBook.id
+	book.title = googleBook.volumeInfo.title
+	book.subtitle = googleBook.volumeInfo.subtitle
+	book.authors = googleBook.volumeInfo.authors
+	book.publishedDate = googleBook.volumeInfo.publishedDate
+	book.description = googleBook.volumeInfo.description
+	book.pageCount = googleBook.volumeInfo.pageCount
+	book.categories = googleBook.volumeInfo.categories
+	book.thumbnail = googleBook.volumeInfo.imageLinks.thumbnail
+	book.language = googleBook.volumeInfo.language
+	book.language = googleBook.volumeInfo.language
+	// newBook.listPrice = googleBook.volumeInfo.listPrice
+	book.listPrice = {
+		amount: 120,
+		currencyCode: 'USD',
+		isOnSale: false,
+	}
+	book.reviews = []
 	return book
 }

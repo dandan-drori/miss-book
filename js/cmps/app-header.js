@@ -1,7 +1,9 @@
 export default {
 	template: `
 		<header class="header">
-			<h1>Miss Book</h1>
+			<router-link to="/">
+				<h1>Miss Book</h1>
+			</router-link>
 			<ul class="nav-links">
 				<li v-for="link in links">
 					<router-link :to="link.path">{{link.name}}</router-link>

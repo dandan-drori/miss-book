@@ -2,15 +2,18 @@ import { bookService } from '../services/book-service.js'
 import bookFilter from '../cmps/book-filter.js'
 import bookList from '../cmps/book-list.js'
 import bookDetails from '../cmps/book-details.js'
+import bookAdd from '../cmps/book-add.js'
 
 export default {
 	components: {
 		bookFilter,
 		bookList,
 		bookDetails,
+		bookAdd,
 	},
 	template: `
 		<main>
+			<book-add @add-book="refresh"></book-add>
 			<book-filter @filtered="setFilter"></book-filter>
 			<book-list :books="booksToShow"></book-list>
 		</main>
@@ -27,6 +30,19 @@ export default {
 		},
 		setFilter(filterBy) {
 			this.filterBy = filterBy
+		},
+		refresh(addedBook) {
+			this.books.push(addedBook)
+		},
+	},
+	watch: {
+		books() {
+			return {
+				handler(newVal) {
+					this.books = newVal
+				},
+				deep: true,
+			}
 		},
 	},
 	computed: {

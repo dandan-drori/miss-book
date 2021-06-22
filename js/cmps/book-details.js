@@ -16,6 +16,8 @@ export default {
         <section v-if="book" class="book-details">
 			<article>
 				<button @click="onBack">Back</button>
+				<router-link :to="'/book/' + nextBookId">Next Book</router-link>
+				<router-link :to="'/book/' + prevBookId">Prev Book</router-link>
 				<section>
 					<h3>Id:</h3>
 					<p>{{book.id}}</p>
@@ -75,6 +77,8 @@ export default {
 		return {
 			book: null,
 			bookReviews: [],
+			nextBookId: null,
+			prevBookId: null,
 		}
 	},
 	methods: {
@@ -185,5 +189,15 @@ export default {
 	},
 	created() {
 		this.loadBook()
+	},
+	watch: {
+		'$route.params.bookId': {
+			immediate: true,
+			handler() {
+				this.loadBook()
+				bookService.getAdjacentBookId(bookId, 1).then(bookId => (this.nextBookId = bookId))
+				bookService.getAdjacentBookId(bookId, -1).then(bookId => (this.prevBookId = bookId))
+			},
+		},
 	},
 }
